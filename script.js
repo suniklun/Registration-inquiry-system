@@ -3,7 +3,17 @@ document.addEventListener('DOMContentLoaded', loadRecords);
 document.getElementById('registrationForm').addEventListener('submit', function (event) {
     event.preventDefault();
 
-    const name = document.getElementById('name').value;
+    const nameSelect = document.getElementById('name');
+    let name = nameSelect.value;
+
+    if (name === '其他人') {
+        name = document.getElementById('otherName').value;
+        if (!/^[\u4e00-\u9fa5]+$/.test(name)) {
+            alert("請填寫姓名（中文）");
+            return;
+        }
+    }
+
     const dateInput = document.getElementById('date').value;
     const date = new Date(dateInput);
     const timeSlot = document.getElementById('timeSlot').value;
@@ -39,10 +49,17 @@ document.getElementById('registrationForm').addEventListener('submit', function 
     const record = { name, date: `${dateInput} (${weekDay})`, dateValue: dateInput, timeSlot, hospital, department, doctor, visitNumber };
 
     saveRecord(record);
-    loadRecords(); // 重新載入資料以顯示更新後的表格
+    loadRecords();
 
     this.reset();
     document.getElementById('otherHospital').style.display = 'none';
+    document.getElementById('otherName').style.display = 'none';
+});
+
+document.getElementById('name').addEventListener('change', function () {
+    const otherNameInput = document.getElementById('otherName');
+    otherNameInput.style.display = this.value === '其他人' ? 'block' : 'none';
+    otherNameInput.value = '';
 });
 
 document.getElementById('hospital').addEventListener('change', function () {
@@ -79,7 +96,6 @@ document.getElementById('exportExcel').addEventListener('click', function () {
 function saveRecord(record) {
     let records = JSON.parse(localStorage.getItem('records')) || [];
     records.push(record);
-    // 依據看診日期排序
     records.sort((a, b) => new Date(a.dateValue) - new Date(b.dateValue));
     localStorage.setItem('records', JSON.stringify(records));
 }
@@ -89,7 +105,6 @@ function loadRecords() {
     const records = JSON.parse(localStorage.getItem('records')) || [];
 
     tableBody.innerHTML = '';
-    // 依據看診日期排序
     records.forEach(record => {
         addRecordToTable(record);
     });
@@ -122,25 +137,41 @@ function editRow(button) {
     const doctor = row.cells[5].innerText;
     const visitNumber = row.cells[6].innerText;
 
-    document.getElementById('name').value = name;
+    const nameSelect = document.getElementById('name');
+    nameSelect.value = name === '其他人' ? '其他人' : nameSelect.options[1].value;
+
+    if (name === '其他人') {
+        document.getElementById('otherName').value = name;
+        document.getElementById('otherName').style.display = 'block';
+    } else {
+        document.getElementById('otherName').style.display = 'none';
+    }
+
     document.getElementById('date').value = date;
     document.getElementById('timeSlot').value = timeSlot;
-    document.getElementById('hospital').value = hospital === '其他醫院' ? '其他醫院' : hospital;
-    document.getElementById('otherHospital').value = hospital === '其他醫院' ? hospital : '';
+
+    const hospitalSelect = document.getElementById('hospital');
+    hospitalSelect.value = hospital === '其他醫院' ? '其他醫院' : hospitalSelect.options[1].value;
+
+    if (hospital === '其他醫院') {
+        document.getElementById('otherHospital').value = hospital;
+        document.getElementById('otherHospital').style.display = 'block';
+    } else {
+        document.getElementById('otherHospital').style.display = 'none';
+    }
+
     document.getElementById('department').value = department;
     document.getElementById('doctor').value = doctor;
     document.getElementById('visitNumber').value = visitNumber;
 
-    deleteRow(button); // 刪除原有記錄
+    deleteRow(button);
 }
 
 function deleteRow(button) {
     const row = button.parentNode.parentNode;
     const name = row.cells[0].innerText;
-
-    let records = JSON.parse(localStorage.getItem('records')) || [];
-    records = records.filter(record => record.name !== name);
-    localStorage.setItem('records', JSON.stringify(records));
-
-    row.parentNode.removeChild(row);
+    const records = JSON.parse(localStorage.getItem('records')) || [];
+    const updatedRecords = records.filter(record => record.name !== name);
+    localStorage.setItem('records', JSON.stringify(updatedRecords));
+    loadRecords();
 }
