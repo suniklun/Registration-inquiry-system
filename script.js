@@ -4,14 +4,11 @@ document.getElementById('registrationForm').addEventListener('submit', function 
     event.preventDefault();
 
     const nameSelect = document.getElementById('name');
-    let name = nameSelect.value;
+    const name = nameSelect.value;
 
-    if (name === '其他人') {
-        name = document.getElementById('otherName').value;
-        if (!/^[\u4e00-\u9fa5]+$/.test(name)) {
-            alert("請填寫姓名（中文）");
-            return;
-        }
+    if (!/^[\u4e00-\u9fa5]+$/.test(name)) {
+        alert("請填寫姓名（中文）");
+        return;
     }
 
     const dateInput = document.getElementById('date').value;
@@ -53,13 +50,6 @@ document.getElementById('registrationForm').addEventListener('submit', function 
 
     this.reset();
     document.getElementById('otherHospital').style.display = 'none';
-    document.getElementById('otherName').style.display = 'none';
-});
-
-document.getElementById('name').addEventListener('change', function () {
-    const otherNameInput = document.getElementById('otherName');
-    otherNameInput.style.display = this.value === '其他人' ? 'block' : 'none';
-    otherNameInput.value = '';
 });
 
 document.getElementById('hospital').addEventListener('change', function () {
@@ -137,29 +127,10 @@ function editRow(button) {
     const doctor = row.cells[5].innerText;
     const visitNumber = row.cells[6].innerText;
 
-    const nameSelect = document.getElementById('name');
-    nameSelect.value = name === '其他人' ? '其他人' : nameSelect.options[1].value;
-
-    if (name === '其他人') {
-        document.getElementById('otherName').value = name;
-        document.getElementById('otherName').style.display = 'block';
-    } else {
-        document.getElementById('otherName').style.display = 'none';
-    }
-
+    document.getElementById('name').value = name;
     document.getElementById('date').value = date;
     document.getElementById('timeSlot').value = timeSlot;
-
-    const hospitalSelect = document.getElementById('hospital');
-    hospitalSelect.value = hospital === '其他醫院' ? '其他醫院' : hospitalSelect.options[1].value;
-
-    if (hospital === '其他醫院') {
-        document.getElementById('otherHospital').value = hospital;
-        document.getElementById('otherHospital').style.display = 'block';
-    } else {
-        document.getElementById('otherHospital').style.display = 'none';
-    }
-
+    document.getElementById('hospital').value = hospital;
     document.getElementById('department').value = department;
     document.getElementById('doctor').value = doctor;
     document.getElementById('visitNumber').value = visitNumber;
@@ -172,6 +143,7 @@ function deleteRow(button) {
     const name = row.cells[0].innerText;
     const records = JSON.parse(localStorage.getItem('records')) || [];
     const updatedRecords = records.filter(record => record.name !== name);
+
     localStorage.setItem('records', JSON.stringify(updatedRecords));
     loadRecords();
 }

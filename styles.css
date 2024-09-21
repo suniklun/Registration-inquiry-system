@@ -1,123 +1,79 @@
 body {
-    font-family: 'Arial', sans-serif;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(to right, #a8edea, #fed6e3);
+    text-align: center;
     margin: 0;
-    padding: 0;
-    background: linear-gradient(to right, #e1f5fe, #b3e5fc);
-    color: #333;
+    padding: 20px;
 }
 
 .container {
     max-width: 800px;
-    margin: auto;
-    padding: 20px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    margin: 0 auto;
+    background: white;
     border-radius: 10px;
-    background-color: white;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 h1 {
-    text-align: center;
-    font-size: 2.5em;
+    font-size: 2em;
     font-weight: bold;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
     margin-bottom: 20px;
 }
 
 form {
-    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 label {
-    font-weight: bold;
-    display: block;
     margin: 10px 0 5px;
+    font-weight: bold;
 }
 
-input, select {
-    width: 100%;
-    padding: 10px;
+input, select, button {
+    width: 80%;
     margin-bottom: 15px;
-    border: 1px solid #ccc;
+    padding: 10px;
     border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    transition: border 0.3s;
-}
-
-input:focus, select:focus {
-    border: 1px solid #76c7c0;
-    outline: none;
+    border: 1px solid #ccc;
 }
 
 button {
-    width: 100%;
-    padding: 10px;
-    background-color: #8d6e63; /* 深黃褐色 */
+    cursor: pointer;
+    background-color: #7877d1;
     color: white;
     border: none;
-    border-radius: 5px;
-    font-weight: bold;
-    cursor: pointer;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     transition: background-color 0.3s;
-    margin-bottom: 10px; /* 增加按鈕之間的間距 */
 }
 
 button:hover {
-    background-color: #7b5e57; /* 懸停顏色 */
+    background-color: #7c5c5c;
 }
 
 table {
     width: 100%;
+    margin-top: 20px;
     border-collapse: collapse;
-    margin-top: 10px;
-    background-color: #ffffff;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-th {
-    background-color: #00796b; /* 深綠色 */
-    color: white;
-    font-weight: bold;
-}
-
-td {
-    background-color: #e0f2f1; /* 淺綠色 */
-    border: 2px solid #004d40; /* 深綠色邊框 */
-    padding: 12px;
+th, td {
+    border: 1px solid #ccc;
+    padding: 10px;
     text-align: center;
 }
 
-td:nth-child(even) {
-    background-color: #b2dfdb; /* 較深的淺綠色 */
+th {
+    background-color: #f2f2f2;
 }
 
 td button {
-    padding: 5px 10px;
-    background-color: #e57373; /* 刪除按鈕顏色 */
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+    margin: 0.8px;
+    background-color: #2d742e;
+    color: rgb(255, 255, 255);
 }
 
 td button:hover {
-    background-color: #ef5350; /* 刪除按鈕懸停顏色 */
-}
-
-/* 更新匯出按鈕的顏色為橘色 */
-#exportExcel {
-    background-color: #ff9800; /* 橘色 */
-}
-
-#exportExcel:hover {
-    background-color: #fb8c00; /* 橘色懸停效果 */
-}
-
-/* 刪除全部按鈕的顏色回到原本 */
-#deleteAll {
-    background-color: #76c7c0; /* 原本顏色 */
-}
-
-#deleteAll:hover {
-    background-color: #64b2aa; /* 懸停顏色 */
+    background-color: #2ed737;
 }
