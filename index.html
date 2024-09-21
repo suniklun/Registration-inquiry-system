@@ -1,38 +1,40 @@
 <!DOCTYPE html>
-<html lang="zh-TW">
+<html lang="zh-Hant">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>掛號查詢</title>
     <link rel="stylesheet" href="styles.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>
-    <title>掛號查詢網站</title>
 </head>
 <body>
     <div class="container">
         <h1>掛號查詢系統</h1>
         <form id="registrationForm">
-            <label for="name">姓名</label>
+            <label for="name">姓名:</label>
             <select id="name" required>
-                <option value="">選擇姓名</option>
+                <option value="" disabled selected>請選擇姓名</option>
                 <option value="孫翊倫">孫翊倫</option>
                 <option value="卓珮雯">卓珮雯</option>
                 <option value="孫志慶">孫志慶</option>
-                <!-- 可以根據需求添加更多選項 -->
-            </select>
+                <option value="其他人">其他人</option>
 
-            <label for="date">日期</label>
+                <!-- 可根據需求添加其他姓名 -->
+            </select>
+            <input type="text" id="otherName" placeholder="請填寫其他人姓名（中文）" style="display:none;" required>
+
+            <label for="date">日期:</label>
             <input type="date" id="date" required>
 
-            <label for="timeSlot">時段</label>
+            <label for="timeSlot">時段:</label>
             <select id="timeSlot" required>
                 <option value="上午">上午</option>
                 <option value="下午">下午</option>
                 <option value="夜間">夜間</option>
             </select>
 
-            <label for="hospital">醫院</label>
+            <label for="hospital">醫院:</label>
             <select id="hospital" required>
-                <option value="">請選擇醫院</option>
+                <option value="" disabled selected>選擇醫院</option>
                 <option value="義大醫院">義大醫院</option>
                 <option value="大昌醫院">大昌醫院</option>
                 <option value="長庚醫院">長庚醫院</option>
@@ -42,18 +44,18 @@
             </select>
             <input type="text" id="otherHospital" placeholder="請填寫其他醫院名稱" style="display:none;">
 
-            <label for="department">科別</label>
-            <input type="text" id="department" required>
+            <label for="department">科別:</label>
+            <input type="text" id="department" required placeholder="請填寫科別（中文）">
 
-            <label for="doctor">醫師</label>
-            <input type="text" id="doctor" required>
+            <label for="doctor">醫師:</label>
+            <input type="text" id="doctor" required placeholder="請填寫醫師名稱（中文）">
 
-            <label for="visitNumber">看診號</label>
+            <label for="visitNumber">看診號:</label>
             <input type="number" id="visitNumber" min="1" required>
 
             <button type="submit">提交</button>
             <button type="button" id="deleteAll">刪除全部</button>
-            <button type="button" id="exportExcel">匯出Excel</button>
+            <button type="button" id="exportExcel">匯出 Excel</button>
         </form>
 
         <table id="recordsTable">
@@ -69,10 +71,11 @@
                     <th>操作</th>
                 </tr>
             </thead>
-            <tbody></tbody>
+            <tbody>
+            </tbody>
         </table>
     </div>
-
     <script src="script.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
 </body>
 </html>
